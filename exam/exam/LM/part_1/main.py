@@ -14,7 +14,7 @@ from functions import *
 from model import LM_RNN
 
 if __name__ == "__main__":
-    hid_size = 300
+    hid_size = 400
     emb_size = 200
 
     lr = 0.5
