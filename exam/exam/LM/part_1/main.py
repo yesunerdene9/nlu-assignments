@@ -28,6 +28,7 @@ if __name__ == "__main__":
     model.apply(init_weights)
 
     optimizer = optim.SGD(model.parameters(), lr=lr)
+    # optimizer = optim.AdamW(model.parameters(), lr=lr)
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
 

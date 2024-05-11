@@ -36,10 +36,10 @@ class LM_RNN(nn.Module):
     def __init__(self, 
                  emb_size, 
                  hidden_size, 
-                 output_size, 
+                 output_size,
                  pad_index=0, 
-                 out_dropout=0.1,
-                 emb_dropout=0.1, 
+                 out_dropout=0.5,
+                 emb_dropout=0.5, 
                  n_layers=1):
         super(LM_RNN, self).__init__()
 
