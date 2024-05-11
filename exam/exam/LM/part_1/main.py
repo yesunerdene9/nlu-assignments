@@ -15,7 +15,7 @@ from model import LM_RNN
 
 if __name__ == "__main__":
     hid_size = 400
-    emb_size = 200
+    emb_size = 300
 
     lr = 0.5
     clip = 5
@@ -65,5 +65,5 @@ if __name__ == "__main__":
     print('\n\nparams:')
     print('learning rate ', lr)
     print('hidden size ', hid_size)
-    print('embedded size ', hid_size)
+    print('embedded size ', emb_size)
     print('\n')
