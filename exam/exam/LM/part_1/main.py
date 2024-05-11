@@ -15,9 +15,9 @@ from model import LM_RNN
 
 if __name__ == "__main__":
     hid_size = 300
-    emb_size = 300
+    emb_size = 200
 
-    lr = 0.01
+    lr = 0.5
     clip = 5
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     print(device)
