@@ -21,7 +21,6 @@ if __name__ == "__main__":
     clip = 5
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     print(device)
-    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     vocab_len = len(lang.word2id)
 
@@ -32,7 +31,7 @@ if __name__ == "__main__":
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
 
-    n_epochs = 2
+    n_epochs = 100
     patience = 3
     losses_train = []
     losses_dev = []
@@ -49,7 +48,7 @@ if __name__ == "__main__":
             ppl_dev, loss_dev = eval_loop(dev_loader, criterion_eval, model)
             losses_dev.append(np.asarray(loss_dev).mean())
             pbar.set_description("PPL: %f" % ppl_dev)
-            if  ppl_dev < best_ppl: # the lower, the better
+            if  ppl_dev < best_ppl:
                 best_ppl = ppl_dev
                 best_model = copy.deepcopy(model).to('cpu')
                 patience = 3
@@ -62,3 +61,9 @@ if __name__ == "__main__":
     best_model.to(device)
     final_ppl,  _ = eval_loop(test_loader, criterion_eval, best_model)
     print('Test ppl: ', final_ppl)
+
+    print('\n\nparams:')
+    print('learning rate ', lr)
+    print('hidden size ', hid_size)
+    print('embedded size ', hid_size)
+    print('\n')
