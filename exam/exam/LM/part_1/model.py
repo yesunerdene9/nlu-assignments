@@ -38,8 +38,8 @@ class LM_RNN(nn.Module):
                  hidden_size, 
                  output_size,
                  pad_index=0, 
-                 out_dropout=0.5,
-                 emb_dropout=0.5, 
+                 out_dropout=0.1,
+                 emb_dropout=0.1, 
                  n_layers=1):
         super(LM_RNN, self).__init__()
 
@@ -49,7 +49,6 @@ class LM_RNN(nn.Module):
         # 2.1
         self.dropoutEmb = nn.Dropout(emb_dropout)
 
-        # TO DO 1.1
         self.rnn = nn.LSTM(emb_size, hidden_size, n_layers, bidirectional=False, batch_first=True)
         self.pad_token = pad_index
 
