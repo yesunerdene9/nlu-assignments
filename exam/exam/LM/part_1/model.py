@@ -10,11 +10,14 @@ class LM_RNN(nn.Module):
                  emb_dropout=0.1, 
                  n_layers=1):
         super(LM_RNN, self).__init__()
-        # Token ids to vectors, we will better see this in the next lab
+
         self.embedding = nn.Embedding(output_size, emb_size, padding_idx=pad_index)
         # Pytorch's RNN layer: https://pytorch.org/docs/stable/generated/torch.nn.RNN.html
+
+        # TO DO 1.1
         self.rnn = nn.RNN(emb_size, hidden_size, n_layers, bidirectional=False, batch_first=True)
         self.pad_token = pad_index
+        
         # Linear layer to project the hidden layer to our output space
         self.output = nn.Linear(hidden_size, output_size)
 

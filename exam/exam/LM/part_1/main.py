@@ -17,7 +17,7 @@ if __name__ == "__main__":
     hid_size = 300
     emb_size = 300
 
-    lr = 0.1
+    lr = 0.01
     clip = 5
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     print(device)
