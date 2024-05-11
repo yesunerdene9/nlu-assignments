@@ -15,7 +15,7 @@ class LM_RNN(nn.Module):
         # Pytorch's RNN layer: https://pytorch.org/docs/stable/generated/torch.nn.RNN.html
 
         # TO DO 1.1
-        self.rnn = nn.RNN(emb_size, hidden_size, n_layers, bidirectional=False, batch_first=True)
+        self.rnn = nn.LSTM(emb_size, hidden_size, n_layers, bidirectional=False, batch_first=True)
         self.pad_token = pad_index
         
         # Linear layer to project the hidden layer to our output space
