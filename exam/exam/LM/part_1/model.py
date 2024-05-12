@@ -60,17 +60,17 @@ class LM_RNN(nn.Module):
         emb = self.embedding(input_sequence)
 
         # 2.3
-        dropoutEmb = self.dropoutEmb(emb)
+        dropoutEmbed = self.dropoutEmb(emb)
         
         # 2.4
         # rnn_out, _  = self.rnn(emb)
-        rnn_out, _  = self.rnn(dropoutEmb)
+        rnn_out, _  = self.rnn(dropoutEmbed)
 
         # 2.5
-        dropoutOut = self.dropoutOut(rnn_out)
+        dropoutOutput = self.dropoutOut(rnn_out)
 
         # 2.6
         # output = self.output(rnn_out).permute(0,2,1)
-        output = self.output(dropoutOut).permute(0,2,1)
+        output = self.output(dropoutOutput).permute(0,2,1)
         
         return output
