@@ -14,10 +14,10 @@ from functions import *
 from model import LM_RNN
 
 if __name__ == "__main__":
-    hid_size = 300
+    hid_size = 200
     emb_size = 300
 
-    lr = 0.5
+    lr = 1
     clip = 5
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     print(device)
@@ -30,8 +30,8 @@ if __name__ == "__main__":
 
     # 1.3 Replace SGD with AdamW
 
-    # optimizer = optim.SGD(model.parameters(), lr=lr)
-    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
+    optimizer = optim.SGD(model.parameters(), lr=lr)
+    # optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
 
