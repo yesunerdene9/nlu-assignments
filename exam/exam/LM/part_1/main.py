@@ -21,14 +21,17 @@ if __name__ == "__main__":
     clip = 5
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     print(device)
+    weight_decay = 0.0001
 
     vocab_len = len(lang.word2id)
 
     model = LM_RNN(emb_size, hid_size, vocab_len, pad_index=lang.word2id["<pad>"]).to(device)
     model.apply(init_weights)
 
+    # 1.3 Replace SGD with AdamW
+
     # optimizer = optim.SGD(model.parameters(), lr=lr)
-    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=0.1)
+    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
 
@@ -67,4 +70,5 @@ if __name__ == "__main__":
     print('learning rate ', lr)
     print('hidden size ', hid_size)
     print('embedded size ', emb_size)
+    print('weight decay ', weight_decay)
     print('\n')
