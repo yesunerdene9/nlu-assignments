@@ -21,7 +21,7 @@ if __name__ == "__main__":
     clip = 5
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     print(device)
-    weight_decay = 0.001
+    weight_decay = 0.01
     out_dropout = 0.1
     emb_dropout = 0.1
     n_layers = 2
