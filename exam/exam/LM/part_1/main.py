@@ -22,8 +22,8 @@ if __name__ == "__main__":
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     print(device)
     weight_decay = 0.0001
-    out_dropout = 0.1
-    emb_dropout = 0.1
+    out_dropout = 0.3
+    emb_dropout = 0.3
     n_layers = 2
 
     vocab_len = len(lang.word2id)
@@ -75,5 +75,7 @@ if __name__ == "__main__":
     print('embedded size ', emb_size)
     print('weight decay ', weight_decay)
     print('number of layers ', n_layers)
+    print('out drop ', out_dropout)
+    print('emd drop ', emb_dropout)
     
     print('\n')

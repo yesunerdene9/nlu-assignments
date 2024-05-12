@@ -36,8 +36,8 @@ class LM_RNN(nn.Module):
                  hidden_size, 
                  output_size,
                  pad_index=0, 
-                 out_dropout=0.1,
-                 emb_dropout=0.1, 
+                 out_dropout=0.3,
+                 emb_dropout=0.3, 
                  n_layers=2):
         super(LM_RNN, self).__init__()
 
@@ -67,7 +67,7 @@ class LM_RNN(nn.Module):
         rnn_out, _  = self.rnn(dropoutEmb)
 
         # 2.5
-        dropoutOut = self.dropoutEmb(rnn_out)
+        dropoutOut = self.dropoutOut(rnn_out)
 
         # 2.6
         # output = self.output(rnn_out).permute(0,2,1)
