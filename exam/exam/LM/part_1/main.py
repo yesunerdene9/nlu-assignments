@@ -15,7 +15,7 @@ from model import LM_RNN
 
 if __name__ == "__main__":
     hid_size = 200
-    emb_size = 300
+    emb_size = 200
 
     lr = 1
     clip = 5
