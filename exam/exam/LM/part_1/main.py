@@ -14,8 +14,8 @@ from functions import *
 from model import LM_RNN
 
 if __name__ == "__main__":
-    hid_size = 200
-    emb_size = 200
+    hid_size = 300
+    emb_size = 300
 
     lr = 1
     clip = 5
