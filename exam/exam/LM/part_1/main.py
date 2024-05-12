@@ -6,7 +6,6 @@ import copy
 import math
 import numpy as np
 from tqdm import tqdm
-import matplotlib.pyplot as plt
 
 from utils import *
 from functions import *
