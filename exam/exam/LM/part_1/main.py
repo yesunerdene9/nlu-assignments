@@ -24,7 +24,7 @@ if __name__ == "__main__":
     weight_decay = 0.01
     out_dropout = 0.1
     emb_dropout = 0.1
-    n_layers = 1
+    n_layers = 2
 
     vocab_len = len(lang.word2id)
 
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     # 1.3 Replace SGD with AdamW
 
     # optimizer = optim.SGD(model.parameters(), lr=lr)
-    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
+    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=0.01)
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
 
