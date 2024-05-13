@@ -13,16 +13,16 @@ from functions import *
 from model import LM_RNN
 
 if __name__ == "__main__":
-    hid_size = 200
-    emb_size = 200
+    hid_size = 300
+    emb_size = 300
 
-    lr = 0.6
+    lr = 0.9
     clip = 5
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     print(device)
     weight_decay = 0.001
     out_dropout = 0.1
-    emb_dropout = 0.1
+    emb_dropout = 0.8
     n_layers = 5
 
     vocab_len = len(lang.word2id)
