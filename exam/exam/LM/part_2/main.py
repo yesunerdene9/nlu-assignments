@@ -13,8 +13,8 @@ from functions import *
 from model import LM_RNN
 
 if __name__ == "__main__":
-    hid_size = 300
-    emb_size = 300
+    hid_size = 400
+    emb_size = 400
 
     lr = 1
     clip = 5
@@ -23,14 +23,15 @@ if __name__ == "__main__":
     weight_decay = 0.001
     out_dropout = 0.1
     emb_dropout = 0.1
-    n_layers = 2
+    n_layers = 5
 
     vocab_len = len(lang.word2id)
 
     model = LM_RNN(emb_size, hid_size, vocab_len, pad_index=lang.word2id["<pad>"]).to(device)
     model.apply(init_weights)
 
-    optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay)
+    optimizer = optim.SGD(model.parameters(), lr=lr)
+    # optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay)
     
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
