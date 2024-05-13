@@ -23,7 +23,7 @@ if __name__ == "__main__":
     weight_decay = 0.001
     out_dropout = 0.1
     emb_dropout = 0.8
-    n_layers = 5
+    n_layers = 2
 
     vocab_len = len(lang.word2id)
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
 
     n_epochs = 100
-    patience = 3
+    patience = 5
     losses_train = []
     losses_dev = []
     sampled_epochs = []
