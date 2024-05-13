@@ -44,7 +44,7 @@ class LM_RNN(nn.Module):
                  pad_index=0, 
                  out_dropout=0.1,
                  emb_dropout=0.8, 
-                 n_layers=5):
+                 n_layers=2):
         super(LM_RNN, self).__init__()
 
         self.embedding = nn.Embedding(output_size, emb_size, padding_idx=pad_index)
