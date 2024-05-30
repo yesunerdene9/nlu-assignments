@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import torch.utils.data as data
 
+import math
 from functools import partial
 from torch.utils.data import DataLoader
 
@@ -40,7 +41,6 @@ test_raw = read_file("dataset/PennTreeBank/ptb.test.txt")
 vocab = get_vocab(train_raw, ["<pad>", "<eos>"])
 
 len(vocab)
-
 
 # This class computes and stores our vocab
 # Word to ids and ids to word
@@ -143,7 +143,6 @@ train_loader = DataLoader(train_dataset, batch_size=64, collate_fn=partial(colla
 dev_loader = DataLoader(dev_dataset, batch_size=128, collate_fn=partial(collate_fn, pad_token=lang.word2id["<pad>"]))
 test_loader = DataLoader(test_dataset, batch_size=128, collate_fn=partial(collate_fn, pad_token=lang.word2id["<pad>"]))
 
-import math
 def train_loop(data, optimizer, criterion, model, clip=5):
     model.train()
     loss_array = []
