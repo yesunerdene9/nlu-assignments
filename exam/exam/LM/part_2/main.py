@@ -14,7 +14,7 @@ from model import LM_RNN
 
 if __name__ == "__main__":
     # Defining hyperparameters
-    lr = 0.9
+    lr = 0.1
     clip = 5
     n_layers = 2
 
@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     dropout = 0.5
     
-    weight_decay = 0.1
+    weight_decay = 0.001
     vocab_len = len(lang.word2id)
 
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
