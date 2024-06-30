@@ -32,12 +32,11 @@ if __name__ == "__main__":
     model = LM_RNN(emb_size, hid_size, vocab_len, pad_index=lang.word2id["<pad>"]).to(device)
     model.apply(init_weights)
 
+    # SGD optimizer
+    optimizer = optim.SGD(model.parameters(), lr=lr)
 
     # Task 3 - Replace SGD with AdamW
     # optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
-
-    # SGD optimizer
-    optimizer = optim.SGD(model.parameters(), lr=lr)
 
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
