@@ -1,8 +1,6 @@
 import torch.nn as nn
 from functions import *
 
-# Weight Tying
-
 class LM_RNN(nn.Module):
     def __init__(self, 
                  emb_size, 
