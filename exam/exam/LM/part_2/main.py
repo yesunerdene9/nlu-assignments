@@ -23,6 +23,7 @@ if __name__ == "__main__":
 
     dropout = 0.8
     
+    momentum = 0.9
     weight_decay = 0.00001
     vocab_len = len(lang.word2id)
 
@@ -35,7 +36,7 @@ if __name__ == "__main__":
     # optimizer = optim.SGD(model.parameters(), lr=lr)
 
     # Applying Non-Monotonic Triggered AvSGD optimizer
-    optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay)
+    optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay, momentum=momentum)
     
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
@@ -84,6 +85,7 @@ if __name__ == "__main__":
     print('dropout prob ', dropout)
     print('hidden size ', hid_size)
     print('embedded size ', emb_size)
+    print('momentum ', momentum)
     print('weight decay ', weight_decay)
     print('number of layers ', n_layers)
     
