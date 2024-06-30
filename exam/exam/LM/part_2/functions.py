@@ -7,6 +7,7 @@ from utils import *
 from functions import *
 
 class VariationalDropout(nn.Module):
+    # param dropout - dropout probability
     def __init__(self, dropout):
         super(VariationalDropout, self).__init__()
         self.dropout = dropout
@@ -20,6 +21,7 @@ class VariationalDropout(nn.Module):
         
 
 class NonMonotonicTriggeredAvSGD(optim.Optimizer):
+    # Adjust the learning rate based on the training progress
     def __init__(self, params, lr=0.01, momentum=0, dampening=0, weight_decay=0, nesterov=False):
         defaults = dict(lr=lr, momentum=momentum, dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
         super(NonMonotonicTriggeredAvSGD, self).__init__(params, defaults)

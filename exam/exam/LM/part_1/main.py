@@ -15,7 +15,7 @@ from model import LM_RNN
 if __name__ == "__main__":
     # hyperparameters
     clip = 5
-    lr = 0.001
+    lr = 0.1
     n_layers = 2
 
     hid_size = 300
@@ -34,10 +34,10 @@ if __name__ == "__main__":
 
 
     # Task 3 - Replace SGD with AdamW
-    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
+    # optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
 
-    # old optimizer
-    # optimizer = optim.SGD(model.parameters(), lr=lr)
+    # SGD optimizer
+    optimizer = optim.SGD(model.parameters(), lr=lr)
 
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')

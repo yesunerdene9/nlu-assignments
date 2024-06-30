@@ -14,15 +14,14 @@ from model import LM_RNN
 
 if __name__ == "__main__":
     # Defining hyperparameters
-    lr = 0.9
+    lr = 0.1
     clip = 5
     n_layers = 2
 
     hid_size = 300
     emb_size = 300
 
-    out_dropout = 0.1
-    emb_dropout = 0.8
+    dropout = 0.5
     
     weight_decay = 0.001
 
@@ -33,7 +32,10 @@ if __name__ == "__main__":
     model = LM_RNN(emb_size, hid_size, vocab_len, pad_index=lang.word2id["<pad>"]).to(device)
     model.apply(init_weights)
 
+    # optimizer SGD
     optimizer = optim.SGD(model.parameters(), lr=lr)
+
+    # Applying Non-Monotonic Triggered AvSGD optimizer
     # optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay)
     
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
@@ -80,8 +82,7 @@ if __name__ == "__main__":
 
     print('\n\nparams:')
     print('learning rate ', lr)
-    print('out drop ', out_dropout)
-    print('emd drop ', emb_dropout)
+    print('dropout prob ', dropout)
     print('hidden size ', hid_size)
     print('embedded size ', emb_size)
     print('weight decay ', weight_decay)
