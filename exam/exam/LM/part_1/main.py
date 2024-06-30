@@ -21,8 +21,8 @@ if __name__ == "__main__":
     hid_size = 300
     emb_size = 300
 
-    out_dropout = 0.1
-    emb_dropout = 0.1
+    out_dropout = 0.5
+    emb_dropout = 0.5
     weight_decay = 0.1
 
     vocab_len = len(lang.word2id)
