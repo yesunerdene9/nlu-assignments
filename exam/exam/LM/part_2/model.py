@@ -14,7 +14,7 @@ class LM_RNN(nn.Module):
         self.embedding = nn.Embedding(output_size, emb_size, padding_idx=pad_index)
 
         # Applying Variational dropout - creating custom dropout layer with a 
-        self.dropout = VariationalDropout(emb_dropout)
+        # self.dropout = VariationalDropout(emb_dropout)
     
         self.rnn = nn.LSTM(emb_size, hidden_size, n_layers, bidirectional=False, batch_first=True)
         self.pad_token = pad_index
@@ -27,7 +27,7 @@ class LM_RNN(nn.Module):
     def forward(self, input_sequence):
         emb = self.embedding(input_sequence)
 
-        emb = self.dropout(emb)
+        # emb = self.dropout(emb)
 
         rnn_out, _  = self.rnn(emb)
         output = self.output(rnn_out).permute(0,2,1)
