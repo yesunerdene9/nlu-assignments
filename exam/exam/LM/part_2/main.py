@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     dropout = 0.5
     
-    weight_decay = 0.001
+    weight_decay = 0.01
 
     vocab_len = len(lang.word2id)
 
@@ -33,10 +33,10 @@ if __name__ == "__main__":
     model.apply(init_weights)
 
     # optimizer SGD
-    optimizer = optim.SGD(model.parameters(), lr=lr)
+    # optimizer = optim.SGD(model.parameters(), lr=lr)
 
     # Applying Non-Monotonic Triggered AvSGD optimizer
-    # optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay)
+    optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay)
     
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
