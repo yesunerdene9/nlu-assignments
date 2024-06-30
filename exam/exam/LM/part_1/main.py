@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     out_dropout = 0.1
     emb_dropout = 0.1
-    weight_decay = 0.01
+    weight_decay = 0.1
 
     vocab_len = len(lang.word2id)
 
