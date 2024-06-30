@@ -13,7 +13,7 @@ from functions import *
 from model import LM_RNN
 
 if __name__ == "__main__":
-    # Defining hyperparameters
+    # Defining hyperparameters 
     lr = 0.9
     clip = 5
     n_layers = 2
