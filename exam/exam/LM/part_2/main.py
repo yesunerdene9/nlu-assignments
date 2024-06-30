@@ -33,7 +33,7 @@ if __name__ == "__main__":
     model.apply(init_weights)
 
     # optimizer SGD
-    optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum)
+    optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum, weight_decay=weight_decay)
 
     # Applying Non-Monotonic Triggered AvSGD optimizer
     # optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay, momentum=momentum)
