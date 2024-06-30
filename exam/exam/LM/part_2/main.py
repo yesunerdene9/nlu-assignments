@@ -14,16 +14,16 @@ from model import LM_RNN
 
 if __name__ == "__main__":
     # Defining hyperparameters
-    lr = 1
+    lr = 0.9
     clip = 5
     n_layers = 2
 
     hid_size = 300
     emb_size = 300
 
-    dropout = 0.5
+    dropout = 0.8
     
-    weight_decay = 0.001
+    weight_decay = 0.0001
     vocab_len = len(lang.word2id)
 
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'

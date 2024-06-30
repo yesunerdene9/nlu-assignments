@@ -7,7 +7,7 @@ class LM_RNN(nn.Module):
                  hidden_size, 
                  output_size, 
                  pad_index=0,
-                 emb_dropout=0.5, 
+                 emb_dropout=0.8, 
                  n_layers=2):
         super(LM_RNN, self).__init__()
 
