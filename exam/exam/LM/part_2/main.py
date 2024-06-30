@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     dropout = 0.5
     
-    weight_decay = 0.01
+    weight_decay = 0.1
     vocab_len = len(lang.word2id)
 
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
