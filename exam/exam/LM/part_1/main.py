@@ -16,7 +16,7 @@ if __name__ == "__main__":
     # hyperparameters
     clip = 5
     lr = 0.1
-    n_layers = 2
+    n_layers = 1
 
     hid_size = 300
     emb_size = 300
