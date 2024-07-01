@@ -34,7 +34,7 @@ if __name__ == "__main__":
     model.apply(init_weights)
 
     # SGD optimizer
-    optimizer = optim.SGD(model.parameters(), lr=lr, weight_decay=weight_decay)
+    optimizer = optim.SGD(model.parameters(), lr=lr)
 
     # Task 3 - Replace SGD with AdamW
     # optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
