@@ -25,7 +25,6 @@ if __name__ == "__main__":
     emb_dropout = 0.5
     momentum = 0.9
     weight_decay = 0.01
-    
 
     vocab_len = len(lang.word2id)
 
