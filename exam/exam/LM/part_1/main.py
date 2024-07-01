@@ -36,8 +36,8 @@ if __name__ == "__main__":
     # SGD optimizer
     # optimizer = optim.SGD(model.parameters(), lr=lr)
 
-    # Task 3 - Replace SGD with AdamW weight_decay=weight_decay
-    optimizer = optim.AdamW(model.parameters(), lr=lr)
+    # Task 3 - Replace SGD with AdamW 
+    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
 
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
