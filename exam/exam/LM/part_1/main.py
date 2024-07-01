@@ -15,7 +15,7 @@ from model import LM_RNN
 if __name__ == "__main__":
     # hyperparameters
     clip = 5
-    lr = 0.9
+    lr = 0.1
     n_layers = 1
 
     hid_size = 300
@@ -23,7 +23,8 @@ if __name__ == "__main__":
 
     out_dropout = 0.5
     emb_dropout = 0.5
-    weight_decay = 0.1
+    momentum = 0.9
+    weight_decay = 0.00001
 
     vocab_len = len(lang.word2id)
 
@@ -33,7 +34,7 @@ if __name__ == "__main__":
     model.apply(init_weights)
 
     # SGD optimizer
-    optimizer = optim.SGD(model.parameters(), lr=lr)
+    optimizer = optim.SGD(model.parameters(), lr=lr, weight_decay=weight_decay, momentum=momentum)
 
     # Task 3 - Replace SGD with AdamW
     # optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
@@ -89,6 +90,7 @@ if __name__ == "__main__":
     print('emd drop ', emb_dropout)
     print('hidden size ', hid_size)
     print('embedded size ', emb_size)
+    print('momentum ', momentum)
     print('weight decay ', weight_decay)
     print('number of layers ', n_layers)
     
