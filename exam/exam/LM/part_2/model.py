@@ -22,7 +22,7 @@ class LM_RNN(nn.Module):
         self.output = nn.Linear(hidden_size, output_size)
         
         # Applying weight tying - share the same weight on the output layer as the embedding layer
-        self.output.weight = self.embedding.weight
+        # self.output.weight = self.embedding.weight
 
     def forward(self, input_sequence):
         emb = self.embedding(input_sequence)
