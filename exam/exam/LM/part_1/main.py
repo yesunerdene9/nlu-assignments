@@ -15,7 +15,7 @@ from model import LM_RNN
 if __name__ == "__main__":
     # hyperparameters
     clip = 5
-    lr = 0.9
+    lr = 1
     n_layers = 1
 
     hid_size = 300
@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     out_dropout = 0.5
     emb_dropout = 0.5
-    weight_decay = 0.001
+    weight_decay = 0.01
 
     vocab_len = len(lang.word2id)
 
