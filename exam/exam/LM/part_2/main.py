@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
     print('\n\nparams:')
     print('learning rate ', lr)
-    print('dropout prob ', dropout)
+    print('dropout prob ', emb_dropout)
     print('hidden size ', hid_size)
     print('embedded size ', emb_size)
     print('momentum ', momentum)
