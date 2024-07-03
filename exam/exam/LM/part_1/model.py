@@ -16,7 +16,7 @@ class LM_RNN(nn.Module):
         # Task 2.1 - Add dropout layer after the embedding layer
         self.dropout_emb = nn.Dropout(emb_dropout)
 
-        # Task 1 - Replace RNN with LSTM network
+        # Task 1 - Replace RNN with LSTM network - nn.LSTM
         self.rnn = nn.LSTM(emb_size, hidden_size, n_layers, bidirectional=False, batch_first=True)
         self.pad_token = pad_index
 
@@ -29,12 +29,12 @@ class LM_RNN(nn.Module):
     def forward(self, input_sequence):
         emb = self.embedding(input_sequence)
 
-        # Appying dropout on embedding
+        # Appying dropout on embedding layer
         emb = self.dropout_emb(emb)
 
         rnn_out, _  = self.rnn(emb)
 
-        # Appying dropout before output
+        # Appying dropout before output layer
         rnn_out = self.dropout_out(rnn_out)
 
         output = self.output(rnn_out).permute(0,2,1)

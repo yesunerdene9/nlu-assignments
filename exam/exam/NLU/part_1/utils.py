@@ -1,21 +1,21 @@
-import json
-from pprint import pprint
-# import random
-# import numpy as np
-from sklearn.model_selection import train_test_split
-from collections import Counter
 import os
 import torch
 import torch.nn as nn
 import torch.utils.data as data
 from torch.utils.data import DataLoader
-from conll import evaluate
+
+import json
+from pprint import pprint
+from collections import Counter
+
 from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
+
+from conll import evaluate
 
 
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 
-# device = 'cuda:0' # cuda:0 means we are using the GPU with id 0, if you have multiple GPU
 os.environ['CUDA_LAUNCH_BLOCKING'] = "1" # Used to report errors on CUDA side
 PAD_TOKEN = 0
 
@@ -35,8 +35,6 @@ print('Train samples:', len(tmp_train_raw))
 print('Test samples:', len(test_raw))
 
 pprint(tmp_train_raw[0])
-
-
 
 # First we get the 10% of the training set, then we compute the percentage of these examples 
 portion = 0.10
@@ -65,18 +63,9 @@ dev_raw = X_dev
 
 y_test = [x['intent'] for x in test_raw]
 
-# Intent distributions
-# print('Train:')
-# pprint({k:round(v/len(y_train),3)*100 for k, v in sorted(Counter(y_train).items())})
-# print('Dev:'), 
-# pprint({k:round(v/len(y_dev),3)*100 for k, v in sorted(Counter(y_dev).items())})
-# print('Test:') 
-# pprint({k:round(v/len(y_test),3)*100 for k, v in sorted(Counter(y_test).items())})
-# print('='*89)
-# # Dataset size
-# print('TRAIN size:', len(train_raw))
-# print('DEV size:', len(dev_raw))
-# print('TEST size:', len(test_raw))
+print('TRAIN size:', len(train_raw))
+print('DEV size:', len(dev_raw))
+print('TEST size:', len(test_raw))
 
 
 w2id = {'pad':PAD_TOKEN, 'unk': 1}

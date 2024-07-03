@@ -4,7 +4,6 @@ import re
 Modified version of https://pypi.org/project/conlleval/
 """
 
-
 def stats():
     return {'cor': 0, 'hyp': 0, 'ref': 0}
 

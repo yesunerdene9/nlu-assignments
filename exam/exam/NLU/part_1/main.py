@@ -14,8 +14,8 @@ if __name__ == "__main__":
     hid_size = 300
     emb_size = 300
 
-    lr = 0.0001 # learning rate
-    clip = 5 # Clip the gradient
+    lr = 0.0001
+    clip = 5
     weight_decay = 0.01
     n_layers = 2
     dropout = 0.1
@@ -49,10 +49,14 @@ if __name__ == "__main__":
                 results_dev, intent_res, loss_dev = eval_loop(dev_loader, criterion_slots,
                                                             criterion_intents, model, lang)
                 losses_dev.append(np.asarray(loss_dev).mean())
-                f1 = results_dev['total']['f']
 
-                if f1 > best_f1:
-                    best_f1 = f1
+                # For decreasing the patience, using average between slot f1 and intent accuracy
+                f1 = results_dev['total']['f']
+                accuracy = intent_res['accuracy']
+                f1_accuracy = f1 + accuracy / 2
+
+                if f1_accuracy > best_f1:
+                    best_f1 = f1_accuracy
                 else:
                     patience -= 1
                 if patience <= 0: # Early stopping with patient

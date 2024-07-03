@@ -21,7 +21,8 @@ if __name__ == "__main__":
     hid_size = 300
     emb_size = 300
 
-    dropout = 0.8
+    emb_dropout = 0.8
+    out_dropout = 0.8
     
     momentum = 0.9
     weight_decay = 0.00001
@@ -29,7 +30,9 @@ if __name__ == "__main__":
 
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 
-    model = LM_RNN(emb_size, hid_size, vocab_len, pad_index=lang.word2id["<pad>"]).to(device)
+    model = LM_RNN(emb_size, hid_size, vocab_len, 
+                   pad_index=lang.word2id["<pad>"], 
+                   emb_dropout=emb_dropout, out_dropout=out_dropout).to(device)
     model.apply(init_weights)
 
     # optimizer SGD

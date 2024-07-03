@@ -1,21 +1,19 @@
-import json
-from pprint import pprint
-# import random
-# import numpy as np
-from sklearn.model_selection import train_test_split
-from collections import Counter
 import os
 import torch
 import torch.nn as nn
 import torch.utils.data as data
 from torch.utils.data import DataLoader
+
+import json
+from pprint import pprint
+from sklearn.model_selection import train_test_split
+from collections import Counter
+
 from conll import evaluate
 from sklearn.metrics import classification_report
 
-
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 
-# device = 'cuda:0' # cuda:0 means we are using the GPU with id 0, if you have multiple GPU
 os.environ['CUDA_LAUNCH_BLOCKING'] = "1" # Used to report errors on CUDA side
 PAD_TOKEN = 0
 
@@ -31,12 +29,8 @@ def load_data(path):
 
 tmp_train_raw = load_data(os.path.join('dataset','ATIS','train.json'))
 test_raw = load_data(os.path.join('dataset','ATIS','test.json'))
-# print('Train samples:', len(tmp_train_raw))
-# print('Test samples:', len(test_raw))
 
 pprint(tmp_train_raw[0])
-
-
 
 # First we get the 10% of the training set, then we compute the percentage of these examples 
 portion = 0.10
@@ -65,18 +59,9 @@ dev_raw = X_dev
 
 y_test = [x['intent'] for x in test_raw]
 
-# Intent distributions
-# print('Train:')
-# pprint({k:round(v/len(y_train),3)*100 for k, v in sorted(Counter(y_train).items())})
-# print('Dev:'), 
-# pprint({k:round(v/len(y_dev),3)*100 for k, v in sorted(Counter(y_dev).items())})
-# print('Test:') 
-# pprint({k:round(v/len(y_test),3)*100 for k, v in sorted(Counter(y_test).items())})
-# print('='*89)
-# # Dataset size
-# print('TRAIN size:', len(train_raw))
-# print('DEV size:', len(dev_raw))
-# print('TEST size:', len(test_raw))
+print('TRAIN size:', len(train_raw))
+print('DEV size:', len(dev_raw))
+print('TEST size:', len(test_raw))
 
 
 w2id = {'pad':PAD_TOKEN, 'unk': 1}
@@ -110,10 +95,6 @@ for example in test_raw:
 
 sent = 'I wanna a flight from Toronto to Kuala Lumpur'
 mapping = [w2id[w] if w in w2id else w2id['unk'] for w in sent.split()]
-
-# print('# Vocab:', len(w2id)-2) # we remove pad and unk from the count
-# print('# Slots:', len(slot2id)-1)
-# print('# Intent:', len(intent2id))
 
 class Lang():
     def __init__(self, words, intents, slots, cutoff=0):
@@ -196,8 +177,6 @@ class IntentsAndSlots (data.Dataset):
             res.append(tmp_seq)
         return res
 
-
-
 train_dataset = IntentsAndSlots(train_raw, lang)
 dev_dataset = IntentsAndSlots(dev_raw, lang)
 test_dataset = IntentsAndSlots(test_raw, lang)
@@ -246,49 +225,23 @@ train_loader = DataLoader(train_dataset, batch_size=128, collate_fn=collate_fn, 
 dev_loader = DataLoader(dev_dataset, batch_size=64, collate_fn=collate_fn)
 test_loader = DataLoader(test_dataset, batch_size=64, collate_fn=collate_fn)
 
-def init_weights(mat):
-    for m in mat.modules():
-        if type(m) in [nn.GRU, nn.LSTM, nn.RNN]:
-            for name, param in m.named_parameters():
-                if 'weight_ih' in name:
-                    for idx in range(4):
-                        mul = param.shape[0]//4
-                        torch.nn.init.xavier_uniform_(param[idx*mul:(idx+1)*mul])
-                elif 'weight_hh' in name:
-                    for idx in range(4):
-                        mul = param.shape[0]//4
-                        torch.nn.init.orthogonal_(param[idx*mul:(idx+1)*mul])
-                elif 'bias' in name:
-                    param.data.fill_(0)
-        else:
-            if type(m) in [nn.Linear]:
-                torch.nn.init.uniform_(m.weight, -0.01, 0.01)
-                if m.bias != None:
-                    m.bias.data.fill_(0.01)
-
-from conll import evaluate
-from sklearn.metrics import classification_report
-
-def train_loop(data, optimizer, criterion_slots, criterion_intents, model, clip=5):
+def train_loop(data, optimizer, model, clip=5):
     model.train()
     loss_array = []
 
     for sample in data:
-      optimizer.zero_grad()
+        optimizer.zero_grad()
+        attention_mask = (sample['utterances'] != PAD_TOKEN).long()
 
-      input_ids = sample['utterances']
-      attention_mask = (input_ids != PAD_TOKEN).long()
-      intent_labels = sample['intents']
-      slot_labels = sample['y_slots']
-
-      _,_, loss = model(input_ids = input_ids, attention_mask = attention_mask, intent_labels = intent_labels, slot_labels = slot_labels)
-      loss_array.append(loss)
-      loss.backward()
-      torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
-      optimizer.step()
+        _,_, loss = model(input_ids=sample['utterances'], attention_mask=attention_mask, 
+                          intent_labels=sample['intents'], slot_labels=sample['y_slots'])
+        loss_array.append(loss)
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
+        optimizer.step()
     return loss_array
 
-def eval_loop(data, criterion_slots, criterion_intents, model, lang):
+def eval_loop(data, model, lang):
     model.eval()
     loss_array = []
 
@@ -299,33 +252,35 @@ def eval_loop(data, criterion_slots, criterion_intents, model, lang):
     hyp_slots = []
 
     with torch.no_grad():
-      for sample in data:
-        input_ids = sample['utterances']
-        attention_mask = (input_ids != PAD_TOKEN).long()
-        intent_labels = sample['intents']
-        slot_labels = sample['y_slots']
+        for sample in data:
+            attention_mask = (sample['utterances'] != PAD_TOKEN).long()
 
-        intent_logits, slot_logits, loss = model(input_ids = input_ids, attention_mask = attention_mask, intent_labels = intent_labels, slot_labels = slot_labels)
-        loss_array.append(loss)
+            intents, slots, loss = model(input_ids=sample['utterances'], attention_mask=attention_mask, 
+                                            intent_labels=sample['intents'], slot_labels=sample['y_slots'])
+            loss_array.append(loss)
 
-        out_intents = [lang.id2intent[x] 
-                       for x in torch.argmax(intent_logits, dim=1).tolist()]
-        gt_intents = [lang.id2intent[x] for x in intent_labels.tolist()]
-        ref_intents.extend(gt_intents)
-        hyp_intents.extend(out_intents)
-        output_slots = torch.argmax(slot_logits, dim=2)
-        for id_seq, seq in enumerate(output_slots):
-          length = sample['slots_len'].tolist()[id_seq]
-          utt_ids = input_ids[id_seq][:length].tolist()
-          gt_ids = slot_labels[id_seq].tolist()
-          gt_slots = [lang.id2slot[elem] for elem in gt_ids[:length]]
-          utterance = [lang.id2word[elem] for elem in utt_ids]
-          to_decode = seq[:length].tolist()
-          ref_slots.append([(utterance[id_el], elem) for id_el, elem in enumerate(gt_slots)])
-          tmp_seq = []
-          for id_el, elem in enumerate(to_decode):
-            tmp_seq.append((utterance[id_el], lang.id2slot[elem]))
-          hyp_slots.append(tmp_seq)
+            # Intent inference - Get the highest probable class
+            out_intents = [lang.id2intent[x] 
+                        for x in torch.argmax(intents, dim=1).tolist()]
+            gt_intents = [lang.id2intent[x] for x in sample['intents'].tolist()]
+
+            ref_intents.extend(gt_intents)
+            hyp_intents.extend(out_intents)
+            
+            # Slot inference 
+            output_slots = torch.argmax(slots, dim=2)
+            for id_seq, seq in enumerate(output_slots):
+                length = sample['slots_len'].tolist()[id_seq]
+                utt_ids = sample['utterance'][id_seq][:length].tolist()
+                gt_ids = sample['y_slots'][id_seq].tolist()
+                gt_slots = [lang.id2slot[elem] for elem in gt_ids[:length]]
+                utterance = [lang.id2word[elem] for elem in utt_ids]
+                to_decode = seq[:length].tolist()
+                ref_slots.append([(utterance[id_el], elem) for id_el, elem in enumerate(gt_slots)])
+                tmp_seq = []
+                for id_el, elem in enumerate(to_decode):
+                    tmp_seq.append((utterance[id_el], lang.id2slot[elem]))
+                hyp_slots.append(tmp_seq)
 
     try:
       results = evaluate(ref_slots, hyp_slots)

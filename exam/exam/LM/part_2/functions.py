@@ -8,16 +8,16 @@ from functions import *
 
 class VariationalDropout(nn.Module):
     # param dropout - dropout probability
-    def __init__(self, dropout):
+    def __init__(self, dropout, mask):
         super(VariationalDropout, self).__init__()
         self.dropout = dropout
+        self.mask = mask
 
     def forward(self, x):
         if not self.training:
             return x
         else:
-            mask = torch.empty_like(x).bernoulli_(1 - self.dropout)
-            return x * mask / (1 - self.dropout)
+            return x * self.mask
         
 
 class NonMonotonicTriggeredAvSGD(optim.Optimizer):
@@ -28,7 +28,7 @@ class NonMonotonicTriggeredAvSGD(optim.Optimizer):
         self.losses = []
         self.min_loss = math.inf
         self.non_monotonic_steps = 0
-        self.trigger = 3  # Adjust this trigger value as needed
+        self.trigger = 3
 
     def step(self, closure=None):
         loss = None

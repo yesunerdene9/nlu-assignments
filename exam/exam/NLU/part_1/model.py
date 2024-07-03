@@ -13,13 +13,20 @@ class ModelIAS(nn.Module):
 
         self.embedding = nn.Embedding(vocab_len, emb_size, padding_idx=pad_index)
 
+        # Task 1.1 add bidirectionality | bidirectional=True
         self.utt_encoder = nn.LSTM(emb_size, hid_size, n_layer, bidirectional=True, batch_first=True)
         self.slot_out = nn.Linear(2 * hid_size, out_slot)
         self.intent_out = nn.Linear(2 * hid_size, out_int)
 
-        # Dropout layer How/Where do we apply it?
+        # Task 1.2 add dropout layers
+
+        # dropout on the embedding
         self.dropout_emb = nn.Dropout(dropout)
-        self.dropout_out = nn.Dropout(dropout)
+
+        # dropout on the embedding
+        self.dropout_enc = nn.Dropout(dropout)
+        
+        # dropout on the embedding
         self.dropout_hid = nn.Dropout(dropout)
 
     def forward(self, utterance, seq_lengths):
@@ -39,8 +46,8 @@ class ModelIAS(nn.Module):
         utt_encoded, input_sizes = pad_packed_sequence(packed_output, batch_first=True)
         # Get the last hidden state
 
-        # Apply dropout to output
-        utt_encoded = self.dropout_out(utt_encoded)
+        # Apply dropout to encoded uttrance
+        utt_encoded = self.dropout_enc(utt_encoded)
 
         # Concatenate the  hidden state from both directions
         # last_hidden = last_hidden[-1,:,:]
