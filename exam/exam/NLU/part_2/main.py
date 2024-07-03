@@ -61,6 +61,7 @@ if __name__ == "__main__":
                 #                 "slot2id": slot2id,
                 #                 "intent2id": intent2id}
                 # torch.save(saving_object, PATH)
+
                 patience = 3
             else:
                 patience -= 1
