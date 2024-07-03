@@ -14,7 +14,7 @@ from model import LM_RNN
 
 if __name__ == "__main__":
     # Defining hyperparameters 
-    lr = 0.1
+    lr = 0.9
     clip = 5
     n_layers = 2
 
@@ -36,10 +36,10 @@ if __name__ == "__main__":
     model.apply(init_weights)
 
     # optimizer SGD
-    optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum, weight_decay=weight_decay)
+    # optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum, weight_decay=weight_decay)
 
     # Applying Non-Monotonic Triggered AvSGD optimizer
-    # optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay, momentum=momentum)
+    optimizer = NonMonotonicTriggeredAvSGD(model.parameters(), lr=lr, weight_decay=weight_decay, momentum=momentum)
     
     criterion_train = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"])
     criterion_eval = nn.CrossEntropyLoss(ignore_index=lang.word2id["<pad>"], reduction='sum')
