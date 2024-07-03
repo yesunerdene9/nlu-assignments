@@ -4,6 +4,8 @@ from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 from torchcrf import CRF
 from transformers import BertModel, BertTokenizer
 
+PAD_TOKEN = 0
+
 class ModelBertIAS(nn.Module):
     def __init__(self, bert_model_name, out_slot, out_int, dropout=0.1, use_crf=True):
         super(ModelBertIAS, self).__init__()
