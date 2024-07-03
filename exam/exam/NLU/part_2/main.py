@@ -32,7 +32,7 @@ if __name__ == "__main__":
     criterion_slots = nn.CrossEntropyLoss(ignore_index=PAD_TOKEN)
     criterion_intents = nn.CrossEntropyLoss() # Because we do not have the pad token
     
-    n_epochs = 2
+    n_epochs = 40
     patience = 3
     losses_train = []
     losses_dev = []
