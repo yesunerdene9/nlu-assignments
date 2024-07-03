@@ -43,10 +43,10 @@ if __name__ == "__main__":
                         criterion_intents, model, clip=clip)
         if x % 1 == 0: # We check the performance every 5 epochs
             sampled_epochs.append(x)
-            losses_train.append(np.asarray(loss).mean())
+            # losses_train.append(np.asarray(loss).mean())
             results_dev, intent_res, loss_dev = eval_loop(dev_loader, criterion_slots,
                                                         criterion_intents, model, lang)
-            losses_dev.append(np.asarray(loss_dev).mean())
+            # losses_dev.append(np.asarray(loss_dev).mean())
 
             f1 = results_dev['total']['f']
             accuracy = intent_res['accuracy']
