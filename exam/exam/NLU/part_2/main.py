@@ -14,6 +14,8 @@ if __name__ == "__main__":
     hid_size = 200
     emb_size = 300
 
+    PAD_TOKEN = 0
+
     lr = 0.00001 # learning rate
     clip = 5 # Clip the gradient
     weight_decay = 0.01
