@@ -1,7 +1,7 @@
 import json
 from pprint import pprint
-import random
-import numpy as np
+# import random
+# import numpy as np
 from sklearn.model_selection import train_test_split
 from collections import Counter
 import os
@@ -39,7 +39,6 @@ pprint(tmp_train_raw[0])
 
 
 # First we get the 10% of the training set, then we compute the percentage of these examples 
-
 portion = 0.10
 
 intents = [x['intent'] for x in tmp_train_raw] # We stratify on intents
@@ -115,7 +114,6 @@ mapping = [w2id[w] if w in w2id else w2id['unk'] for w in sent.split()]
 # print('# Vocab:', len(w2id)-2) # we remove pad and unk from the count
 # print('# Slots:', len(slot2id)-1)
 # print('# Intent:', len(intent2id))
-
 
 class Lang():
     def __init__(self, words, intents, slots, cutoff=0):
@@ -247,7 +245,6 @@ def collate_fn(data):
 train_loader = DataLoader(train_dataset, batch_size=128, collate_fn=collate_fn,  shuffle=True)
 dev_loader = DataLoader(dev_dataset, batch_size=64, collate_fn=collate_fn)
 test_loader = DataLoader(test_dataset, batch_size=64, collate_fn=collate_fn)
-
 
 def init_weights(mat):
     for m in mat.modules():
