@@ -69,8 +69,8 @@ if __name__ == "__main__":
                 patience = 3
 
                 # To save the model
-                path = 'bin/lm_model_part2.pt'
-                torch.save(model.state_dict(), path)
+                # path = 'bin/lm_model_part2.pt'
+                # torch.save(model.state_dict(), path)
     
             else:
                 patience -= 1

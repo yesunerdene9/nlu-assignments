@@ -50,19 +50,17 @@ if __name__ == "__main__":
             accuracy = intent_res['accuracy']
             f1_accuracy = f1 + accuracy / 2
 
-            print('dev F1: ', f1)
-            print('dev Accuracy:', accuracy)
             if f1_accuracy > best_f1_accuracy:
                 best_f1_accuracy = f1_accuracy
 
-                PATH = os.path.join("bin", "bertone.pt")
-                saving_object = {"epoch": x,
-                                "model": model.state_dict(),
-                                "optimizer": optimizer.state_dict(),
-                                "w2id": w2id,
-                                "slot2id": slot2id,
-                                "intent2id": intent2id}
-                torch.save(saving_object, PATH)
+                # PATH = os.path.join("bin", "bertone.pt")
+                # saving_object = {"epoch": x,
+                #                 "model": model.state_dict(),
+                #                 "optimizer": optimizer.state_dict(),
+                #                 "w2id": w2id,
+                #                 "slot2id": slot2id,
+                #                 "intent2id": intent2id}
+                # torch.save(saving_object, PATH)
                 patience = 3
             else:
                 patience -= 1
