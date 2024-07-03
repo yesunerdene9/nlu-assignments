@@ -58,8 +58,3 @@ class ModelBertIAS(nn.Module):
             total_loss = intent_loss + slot_loss
 
         return intent_logits, slot_logits, total_loss
-
-        # # Slot size: batch_size, seq_len, classes
-        # slots = slots.permute(0, 2, 1)  # We need this for computing the loss
-        # # Slot size: batch_size, classes, seq_len
-        # return slots, intent

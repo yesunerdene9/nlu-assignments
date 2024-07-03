@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     PAD_TOKEN = 0
 
-    lr = 0.00001 # learning rate
+    lr = 5e-5 # learning rate
     clip = 5 # Clip the gradient
     weight_decay = 0.01
     n_layers = 2
