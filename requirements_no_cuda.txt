@@ -181,4 +181,4 @@ wheel==0.41.2
 widgetsnbextension==4.0.10
 zipp==3.17.0
 pytorch-crf==0.7.2
-transformers==3.0.2
+transformers==4.42.3
