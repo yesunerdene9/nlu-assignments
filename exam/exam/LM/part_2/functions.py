@@ -8,16 +8,15 @@ from functions import *
 
 class VariationalDropout(nn.Module):
     # param dropout - dropout probability
-    def __init__(self, dropout, mask):
+    def __init__(self, dropout):
         super(VariationalDropout, self).__init__()
         self.dropout = dropout
-        self.mask = mask
 
-    def forward(self, x):
+    def forward(self, x, mask):
         if not self.training:
             return x
         else:
-            return x * self.mask
+            return x * mask
         
 
 class NonMonotonicTriggeredAvSGD(optim.Optimizer):
