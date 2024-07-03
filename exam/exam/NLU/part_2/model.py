@@ -12,6 +12,9 @@ class ModelBertIAS(nn.Module):
         # out_slot = number of slots (output size for slot filling)
         # out_int = number of intents (output size for intent class)
 
+        self.out_int = out_int
+        self.out_slot = out_slot
+
         ###
         self.bert = BertModel.from_pretrained(bert_model_name)
         hidden_size = self.bert.config.hidden_size
@@ -44,13 +47,13 @@ class ModelBertIAS(nn.Module):
         if intent_labels is not None and slot_labels is not None:
             intent_loss_fct = nn.CrossEntropyLoss()
             slot_loss_fct = nn.CrossEntropyLoss(ignore_index = PAD_TOKEN)
-            intent_loss = intent_loss_fct(intent_logits.view(-1, out_int), intent_labels.view(-1))
+            intent_loss = intent_loss_fct(intent_logits.view(-1, self.out_int), intent_labels.view(-1))
 
             if self.use_crf:
                 slot_loss = -self.crf(slot_logits, slot_labels, mask = attention_mask.byte(), reduction = 'mean')
 
             else:
-                slot_loss = slot_loss_fct(slot_logits.view(-1, out_slot), slot_labels.view(-1))
+                slot_loss = slot_loss_fct(slot_logits.view(-1, self.out_slot), slot_labels.view(-1))
                 
             total_loss = intent_loss + slot_loss
 
