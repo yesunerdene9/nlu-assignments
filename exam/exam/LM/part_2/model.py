@@ -1,6 +1,5 @@
 import torch.nn as nn
 from functions import *
-from torch.autograd import Variable
 
 class LM_RNN(nn.Module):
     def __init__(self, 
