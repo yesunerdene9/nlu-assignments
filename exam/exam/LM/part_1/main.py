@@ -15,7 +15,7 @@ from model import LM_RNN
 if __name__ == "__main__":
     # hyperparameters
     clip = 5
-    lr = 2
+    lr = 0.001
     n_layers = 1
 
     hid_size = 300
