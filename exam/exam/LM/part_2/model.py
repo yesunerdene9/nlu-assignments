@@ -24,7 +24,7 @@ class LM_RNN(nn.Module):
         self.output = nn.Linear(hidden_size, output_size)
         
         # Applying weight tying - share the same weight on the output layer as the embedding layer
-        self.output.weight = self.embedding.weight
+        # self.output.weight = self.embedding.weight
 
     def forward(self, input_sequence):
         emb = self.embedding(input_sequence)
@@ -33,11 +33,11 @@ class LM_RNN(nn.Module):
         mask = torch.ones(emb.size(0), 1, emb.size(2), device=emb.device, requires_grad=False)
 
         # Apply variational dropout to the embeddings
-        emb = self.dropout_emb(emb, mask)
+        # emb = self.dropout_emb(emb, mask)
 
         rnn_out, _  = self.rnn(emb)
 
         # Apply variational dropout to the output
-        rnn_out = self.dropout_out(rnn_out, mask)
+        # rnn_out = self.dropout_out(rnn_out, mask)
         output = self.output(rnn_out).permute(0,2,1)
         return output

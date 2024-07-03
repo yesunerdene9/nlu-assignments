@@ -69,8 +69,7 @@ if __name__ == "__main__":
             if patience <= 0: # Early stopping with patience
                 break # Not nice but it keeps the code clean
 
-    results_test, intent_test, _ = eval_loop(test_loader, criterion_slots,
-                                            criterion_intents, model, lang)
+    results_test, intent_test, _ = eval_loop(test_loader, model, lang)
 
     print("learning rate: ", lr)
     print("weight decay: ", weight_decay)
