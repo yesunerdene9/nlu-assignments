@@ -59,7 +59,7 @@ if __name__ == "__main__":
                 best_f1_accuracy = f1_accuracy
 
                 # Here you should save the model
-                PATH = os.path.join("bin", "bert.pt")
+                PATH = os.path.join("bin", "bert4.pt")
                 saving_object = {"epoch": x,
                                 "model": model.state_dict(),
                                 "optimizer": optimizer.state_dict(),
